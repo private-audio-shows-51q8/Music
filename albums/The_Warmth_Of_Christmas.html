@@ -77,16 +77,20 @@ a.download {
 /* MINI‑PLAYER ESTILO SPOTIFY */
 #floating-player {
   position: fixed;
-  bottom: -120px; /* oculto inicialmente */
+  bottom: -140px;
   left: 0;
   width: 100%;
-  background: linear-gradient(135deg, #1a1a1a, #3a2b2b);
-  backdrop-filter: blur(12px);
-  padding: 12px;
+  background: rgba(0,0,0,0.6); /* fallback con 60% transparencia */
+  backdrop-filter: blur(14px);
+  padding: 14px 18px;
+  box-sizing: border-box;
   box-shadow: 0 -2px 15px rgba(0,0,0,0.6);
   transition: bottom 0.35s ease;
   z-index: 999;
+  border-top: 1px solid rgba(255,255,255,0.1);
 }
+
+
 
 .fp-content {
   display: flex;
@@ -145,7 +149,7 @@ a.download {
 
 <!-- CANCIÓN 1 --> 
 <div class="track"> 
-  <div class="track-info" onclick="play('01._So_This_Is_Christmas.MP3')"> 
+  <div class="track-info" onclick="play('01._So_This_Is_Christmas.MP3', this)"> 
     <img src="../img/portadaWarmthOfChristmas.png"> 
     So This Is Christmas 
 </div>
@@ -159,7 +163,7 @@ Descargar
   
 <!-- CANCIÓN 2 --> 
 <div class="track"> 
-  <div class="track-info" onclick="play('02.%20The%20Warmth%20Of%20Christmas.MP3')">
+  <div class="track-info" onclick="play('02.%20The%20Warmth%20Of%20Christmas.MP3', this)">
     <img src="../img/portadaWarmthOfChristmas.png"> 
     The Warmth Of Christmas 
 </div>
@@ -171,7 +175,7 @@ Descargar
 </div>
 
 <script>
-function play(file){
+function play(file, element){
   const player = document.getElementById('player');
   const bar = document.getElementById('floating-player');
   const title = document.getElementById('fp-title');
@@ -181,16 +185,22 @@ function play(file){
   player.src = "../audio/Warmth_Of_Christmas/" + file;
   player.play();
 
-  // Actualiza título
-  const cleanTitle = file
-    .replace(".MP3","")
-    .replace(/[_\.]/g," ")
-    .trim();
-  title.textContent = cleanTitle;
+  // Obtiene el texto del track pulsado
+  const trackName = element.querySelector("img").nextSibling.textContent.trim();
+  title.textContent = trackName;
+
+  // Actualiza portada del mini-player
+  const coverSrc = element.querySelector("img").src;
+  cover.src = coverSrc;
+
+  // Genera gradiente dinámico
+  setDynamicGradient(coverSrc);
 
   // Muestra el mini-player con animación
   bar.style.bottom = "0";
 }
+
+
   function closePlayer(){
   const bar = document.getElementById('floating-player');
   const player = document.getElementById('player');
@@ -198,6 +208,40 @@ function play(file){
   player.pause();
   bar.style.bottom = "-120px";
 }
+
+  function setDynamicGradient(imageSrc){
+  const playerBar = document.getElementById('floating-player');
+
+  // Creamos una imagen temporal para extraer colores
+  const img = new Image();
+  img.crossOrigin = "anonymous";
+  img.src = imageSrc;
+
+  img.onload = function(){
+    // Creamos un canvas para leer los píxeles
+    const canvas = document.createElement("canvas");
+    const ctx = canvas.getContext("2d");
+
+    canvas.width = img.width;
+    canvas.height = img.height;
+    ctx.drawImage(img, 0, 0);
+
+    // Tomamos 3 píxeles representativos
+    const c1 = ctx.getImageData(10, 10, 1, 1).data;
+    const c2 = ctx.getImageData(img.width/2, img.height/2, 1, 1).data;
+    const c3 = ctx.getImageData(img.width-10, img.height-10, 1, 1).data;
+
+    // Convertimos a rgba con 60% transparencia
+    const col1 = `rgba(${c1[0]}, ${c1[1]}, ${c1[2]}, 0.6)`;
+    const col2 = `rgba(${c2[0]}, ${c2[1]}, ${c2[2]}, 0.6)`;
+    const col3 = `rgba(${c3[0]}, ${c3[1]}, ${c3[2]}, 0.6)`;
+
+    // Aplicamos el gradiente dinámico
+    playerBar.style.background = 
+      `linear-gradient(135deg, ${col1}, ${col2}, ${col3})`;
+  };
+}
+
 
 </script>
   
