@@ -2,6 +2,7 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="noindex, nofollow">
 <title>The Warmth Of Christmas</title>
 
@@ -11,15 +12,20 @@ body {
   color:#eee;
   font-family:Arial;
   text-align:center;
+  font-size:clamp(14px, 2vw, 18px);
 }
-.album {
-  max-width:500px;
+
+  .album {
+  max-width:90%;
   margin:auto;
+  padding:10px;
 }
+  
 .cover {
   width:100%;
   border-radius:10px;
 }
+  
 .track {
   display:flex;
   align-items:center;
@@ -27,10 +33,13 @@ body {
   padding:8px;
   border-bottom:1px solid #333;
 }
+  
 .track img {
-  width:40px;
+  width:12vw;
+  max-width:40px;
   margin-right:10px;
 }
+  
 .track:hover {
   background:#222;
 }
