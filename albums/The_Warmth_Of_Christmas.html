@@ -10,17 +10,18 @@
 body {
   background:#111;
   color:#eee;
-  font-family:Arial;
+  font-family:Arial, sans-serif;
   text-align:center;
   font-size:clamp(14px, 2vw, 18px);
+  margin:0;
 }
 
-  .album {
+.album {
   max-width:90%;
   margin:auto;
   padding:10px;
 }
-  
+
 .cover {
   width:100%;
   max-width:500px;
@@ -41,48 +42,72 @@ body {
   }
 }
 
-  
+.album-title {
+  font-size: 85%;
+  margin-top: 10px;
+}
+
+/* LISTADO DE CANCIONES */
 .track {
   display:flex;
   align-items:center;
   cursor:pointer;
-  padding:8px;
+  padding:8px 4px;
   border-bottom:1px solid #333;
 }
-  
-.track img {
-  width:12vw;
-  max-width:40px;
-  margin-right:10px;
-}
-  
+
 .track:hover {
   background:#222;
 }
-audio {
-  width:100%;
-  margin-top:15px;
-}
-a.download {
-  color:#0b84ff;
-  display:block;
-  margin-top:8px;
+
+.track-info {
+  display:flex;
+  align-items:center;
+  gap:10px;
+  flex:1;
 }
 
-  .album-title {
-  font-size: 85%; /* 20% más pequeño */
-  margin-top: 10px;
+.track img {
+  width:40px;
+  height:40px;
+  border-radius:6px;
+  object-fit:cover;
+}
+
+.track-title {
+  text-align:left;
+}
+
+/* Botón de descarga */
+.download-btn {
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  width:32px;
+  height:32px;
+  margin-left:8px;
+  margin-right:4px;
+  border-radius:50%;
+  border:none;
+  background:transparent;
+  cursor:pointer;
+}
+
+.download-btn svg {
+  width:20px;
+  height:20px;
+  fill:#0b84ff;
 }
 
 /* MINI‑PLAYER ESTILO SPOTIFY */
 #floating-player {
   position: fixed;
-  bottom: -140px;
+  bottom: -200px;
   left: 0;
   width: 100%;
-  background: rgba(0,0,0,0.6); /* fallback con 60% transparencia */
+  background: rgba(0,0,0,0.6);
   backdrop-filter: blur(14px);
-  padding: 14px 18px;
+  padding: 10px 16px 12px;
   box-sizing: border-box;
   box-shadow: 0 -2px 15px rgba(0,0,0,0.6);
   transition: bottom 0.35s ease;
@@ -90,68 +115,85 @@ a.download {
   border-top: 1px solid rgba(255,255,255,0.1);
 }
 
-
+.fp-top-row {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
 
 .fp-content {
-  display: flex;
-  align-items: center;
-  gap: 12px;
+  display:flex;
+  align-items:center;
+  gap:12px;
+  flex:1;
 }
 
 #fp-cover {
-  width: 55px;
-  height: 55px;
-  border-radius: 6px;
-  object-fit: cover;
+  width:55px;
+  height:55px;
+  border-radius:6px;
+  object-fit:cover;
 }
 
 .fp-text {
-  flex: 1;
-  text-align: left;
-  font-size: 14px;
+  flex:1;
+  text-align:left;
+  font-size:14px;
 }
 
 #fp-title {
-  font-weight: bold;
-  color: #fff;
+  font-weight:bold;
+  color:#fff;
 }
 
+/* Botón cerrar arriba a la derecha */
 #fp-close {
   background: transparent;
   border: none;
   color: #fff;
-  font-size: 22px;
+  font-size: 20px;
   cursor: pointer;
-  padding: 0 8px;
+  padding: 4px;
 }
 
-#floating-player audio {
-  width: 100%;
-  margin-top: 8px;
-  border-radius: 6px;
+/* Fila de controles debajo del título */
+.fp-controls-row {
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:18px;
+  margin-top:8px;
 }
 
-  /* Animación de salida del título */
-.fp-title-exit {
-  animation: titleExit 0.35s forwards ease;
+.fp-btn {
+  background:transparent;
+  border:none;
+  cursor:pointer;
+  padding:4px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
 }
 
-@keyframes titleExit {
-  0% { opacity: 1; transform: translateX(0); }
-  100% { opacity: 0; transform: translateX(-30px); }
+.fp-btn svg {
+  width:20px;
+  height:20px;
+  fill:#ffffff;
+  opacity:0.9;
 }
 
-/* Animación de entrada del nuevo título */
-.fp-title-enter {
-  animation: titleEnter 0.35s forwards ease;
+.fp-btn.small svg {
+  width:18px;
+  height:18px;
 }
 
-@keyframes titleEnter {
-  0% { opacity: 0; transform: translateX(30px); }
-  100% { opacity: 1; transform: translateX(0); }
+/* Repetir / aleatorio activos */
+.fp-btn.active svg {
+  opacity:1;
 }
 
-  #fp-progress-container {
+/* Barra de progreso personalizada */
+#fp-progress-container {
   width: 100%;
   height: 6px;
   background: rgba(255,255,255,0.15);
@@ -164,30 +206,94 @@ a.download {
 #fp-progress {
   width: 0%;
   height: 100%;
-  background: rgba(255,255,255,0.6); /* se actualizará con el gradiente dinámico */
+  background: rgba(255,255,255,0.7);
   transition: width 0.1s linear;
 }
 
-#fp-prev, #fp-next {
-  background: transparent;
-  border: none;
-  color: white;
-  font-size: 22px;
-  cursor: pointer;
-  margin-left: 10px;
+/* Animación de salida del título hacia la izquierda */
+.fp-title-exit-left {
+  animation: titleExitLeft 0.35s forwards ease;
 }
 
-  #floating-player.expanded {
-  height: 80vh;
+@keyframes titleExitLeft {
+  0% { opacity: 1; transform: translateX(0); }
+  100% { opacity: 0; transform: translateX(-30px); }
+}
+
+/* Entrada desde la derecha */
+.fp-title-enter-left {
+  animation: titleEnterLeft 0.35s forwards ease;
+}
+
+@keyframes titleEnterLeft {
+  0% { opacity: 0; transform: translateX(30px); }
+  100% { opacity: 1; transform: translateX(0); }
+}
+
+/* Animación de salida del título hacia la derecha (para anterior) */
+.fp-title-exit-right {
+  animation: titleExitRight 0.35s forwards ease;
+}
+
+@keyframes titleExitRight {
+  0% { opacity: 1; transform: translateX(0); }
+  100% { opacity: 0; transform: translateX(30px); }
+}
+
+/* Entrada desde la izquierda (para anterior) */
+.fp-title-enter-right {
+  animation: titleEnterRight 0.35s forwards ease;
+}
+
+@keyframes titleEnterRight {
+  0% { opacity: 0; transform: translateX(-30px); }
+  100% { opacity: 1; transform: translateX(0); }
+}
+
+/* Modo expandido */
+#floating-player.expanded {
+  height: 70vh;
   border-radius: 20px 20px 0 0;
-  padding-top: 30px;
-  transition: all 0.4s ease;
+  padding-top: 18px;
+  display:flex;
+  flex-direction:column;
+  justify-content:flex-start;
 }
 
-  
-</style>
-  
+#floating-player.expanded .fp-top-row {
+  align-items:flex-start;
+}
 
+#floating-player.expanded .fp-content {
+  flex-direction:column;
+  align-items:center;
+  text-align:center;
+}
+
+#floating-player.expanded #fp-cover {
+  width:160px;
+  height:160px;
+  margin-bottom:8px;
+}
+
+#floating-player.expanded .fp-text {
+  text-align:center;
+}
+
+#floating-player.expanded .fp-controls-row {
+  margin-top:16px;
+}
+
+#floating-player.expanded #fp-progress-container {
+  margin-top:16px;
+}
+
+/* Evitar que el click en botones expanda el player */
+.no-expand {
+  pointer-events:auto;
+}
+
+</style>
 </head>
 
 <body>
@@ -195,40 +301,98 @@ a.download {
 <div class="album">
 
   <!-- PORTADA -->
-<img class="cover" src="../img/portadaWarmthOfChristmas.png">
+  <img class="cover" src="../img/portadaWarmthOfChristmas.png" alt="Portada The Warmth Of Christmas">
+  <h1 class="album-title">The Warmth Of Christmas</h1>
 
-<h1 class="album-title">The Warmth Of Christmas</h1>
-  
+  <!-- CANCIÓN 1 -->
+  <div class="track">
+    <div class="track-info" onclick="playIndex(0, 'forward')">
+      <img src="../img/portadaWarmthOfChristmas.png" alt="Portada tema 1">
+      <div class="track-title">So This Is Christmas</div>
+    </div>
+    <a class="download-btn" 
+       href="https://github.com/private-audio-shows-51q8/Music/releases/download/warmth_of_christmas/01.So.This.Is.Christmas.MP3" 
+       download title="Descargar">
+      <svg viewBox="0 0 24 24">
+        <path d="M12 3v12.17l4.59-4.58L18 12l-6 6-6-6 1.41-1.41L11 15.17V3h1zM5 19h14v2H5z"/>
+      </svg>
+    </a>
+  </div>
 
-<!-- CANCIÓN 1 --> 
-<div class="track"> 
-  <div class="track-info" onclick="playIndex(0)"> 
-    <img src="../img/portadaWarmthOfChristmas.png"> 
-    So This Is Christmas 
-</div>
-<a class="download-btn" 
-  href="https://github.com/private-audio-shows-51q8/Music/releases/download/warmth_of_christmas/01.So.This.Is.Christmas.MP3" 
-  download>
-Descargar
-</a> 
+  <!-- CANCIÓN 2 -->
+  <div class="track">
+    <div class="track-info" onclick="playIndex(1, 'forward')">
+      <img src="../img/portadaWarmthOfChristmas.png" alt="Portada tema 2">
+      <div class="track-title">The Warmth Of Christmas</div>
+    </div>
+    <a class="download-btn" 
+       href="https://github.com/private-audio-shows-51q8/Music/releases/download/warmth_of_christmas/02.The.Warmth.Of.Christmas.MP3" 
+       download title="Descargar">
+      <svg viewBox="0 0 24 24">
+        <path d="M12 3v12.17l4.59-4.58L18 12l-6 6-6-6 1.41-1.41L11 15.17V3h1zM5 19h14v2H5z"/>
+      </svg>
+    </a>
+  </div>
+
 </div>
 
-  
-<!-- CANCIÓN 2 --> 
-<div class="track"> 
-  <div class="track-info" onclick="playIndex(1)">
-    <img src="../img/portadaWarmthOfChristmas.png"> 
-    The Warmth Of Christmas 
-</div>
-<a class="download-btn" 
-  href="https://github.com/private-audio-shows-51q8/Music/releases/download/warmth_of_christmas/02.The.Warmth.Of.Christmas.MP3" 
-  download>
-Descargar
-</a> 
+<!-- MINI‑PLAYER FLOTANTE -->
+<div id="floating-player">
+  <div class="fp-top-row">
+    <div class="fp-content">
+      <img id="fp-cover" src="../img/portadaWarmthOfChristmas.png" alt="Portada mini player">
+      <div class="fp-text">
+        <div id="fp-title">Reproduciendo...</div>
+      </div>
+    </div>
+    <button id="fp-close" class="no-expand" onclick="closePlayer()">✕</button>
+  </div>
+
+  <div class="fp-controls-row">
+    <!-- Anterior -->
+    <button id="fp-prev" class="fp-btn no-expand" onclick="prevTrack()">
+      <svg viewBox="0 0 24 24">
+        <path d="M6 5v14h2V5H6zm3.5 7l8.5 7V5l-8.5 7z"/>
+      </svg>
+    </button>
+
+    <!-- Play/Pausa -->
+    <button id="fp-play" class="fp-btn no-expand">
+      <svg id="fp-play-icon" viewBox="0 0 24 24">
+        <path d="M8 5v14l11-7z"/>
+      </svg>
+    </button>
+
+    <!-- Siguiente -->
+    <button id="fp-next" class="fp-btn no-expand" onclick="nextTrack()">
+      <svg viewBox="0 0 24 24">
+        <path d="M16 5v14h-2V5h2zM6 5v14l8.5-7L6 5z"/>
+      </svg>
+    </button>
+
+    <!-- Repetir -->
+    <button id="fp-repeat" class="fp-btn small no-expand" onclick="toggleRepeat()">
+      <svg viewBox="0 0 24 24">
+        <path d="M7 7h9v2l3-3-3-3v2H6a3 3 0 0 0-3 3v4h2V8a1 1 0 0 1 1-1zm10 10H8v-2l-3 3 3 3v-2h10a3 3 0 0 0 3-3v-4h-2v4a1 1 0 0 1-1 1z"/>
+      </svg>
+    </button>
+
+    <!-- Aleatorio -->
+    <button id="fp-shuffle" class="fp-btn small no-expand" onclick="toggleShuffle()">
+      <svg viewBox="0 0 24 24">
+        <path d="M17 3h4v4h-2V5h-2.59l-3.7 3.71-1.42-1.42L14.59 3H17zm-6.29 6.29L5 15v4H3v-5l6.29-6.29 1.42 1.58zM21 15v4h-4v-2h2v-2h2zm-9.29-.71l1.42 1.42L9.41 19H7v-2h1.59l3.12-2.71z"/>
+      </svg>
+    </button>
+  </div>
+
+  <audio id="player"></audio>
+
+  <div id="fp-progress-container">
+    <div id="fp-progress"></div>
+  </div>
 </div>
 
 <script>
-
 const playlist = [
   {
     file: "01._So_This_Is_Christmas.MP3",
@@ -243,69 +407,77 @@ const playlist = [
 ];
 
 let currentIndex = 0;
+let repeat = false;
+let shuffle = false;
 
+const player = document.getElementById("player");
+const floatingPlayer = document.getElementById("floating-player");
+const fpTitle = document.getElementById("fp-title");
+const fpCover = document.getElementById("fp-cover");
+const fpPlayBtn = document.getElementById("fp-play");
+const fpPlayIcon = document.getElementById("fp-play-icon");
+const fpRepeatBtn = document.getElementById("fp-repeat");
+const fpShuffleBtn = document.getElementById("fp-shuffle");
+const fpProgress = document.getElementById("fp-progress");
+const fpProgressContainer = document.getElementById("fp-progress-container");
 
-
-/* ───────────────────────────────────────────────
-   REPRODUCIR CANCIÓN POR ÍNDICE
-─────────────────────────────────────────────── */
-function playIndex(i){
+/* Reproducir por índice, con dirección para animación:
+   direction: 'forward' (lista / siguiente) o 'backward' (anterior) */
+function playIndex(i, direction = 'forward'){
   currentIndex = i;
-
   const track = playlist[i];
-  const player = document.getElementById('player');
-  const bar = document.getElementById('floating-player');
-  const title = document.getElementById('fp-title');
-  const cover = document.getElementById('fp-cover');
 
-  // Actualiza audio
-  player.src = "../audio/Warmth_Of_Christmas/" + track.file;
-  player.play();
+  // Definir animaciones según dirección
+  fpTitle.classList.remove(
+    "fp-title-enter-left",
+    "fp-title-exit-left",
+    "fp-title-enter-right",
+    "fp-title-exit-right"
+  );
 
-  // Animación del título
-  title.classList.remove("fp-title-enter");
-  title.classList.add("fp-title-exit");
+  if (direction === 'backward') {
+    fpTitle.classList.add("fp-title-exit-right");
+  } else {
+    fpTitle.classList.add("fp-title-exit-left");
+  }
 
   setTimeout(() => {
-    title.textContent = track.title;
-    title.classList.remove("fp-title-exit");
-    title.classList.add("fp-title-enter");
+    fpTitle.textContent = track.title;
+
+    fpTitle.classList.remove(
+      "fp-title-enter-left",
+      "fp-title-exit-left",
+      "fp-title-enter-right",
+      "fp-title-exit-right"
+    );
+
+    if (direction === 'backward') {
+      fpTitle.classList.add("fp-title-enter-right");
+    } else {
+      fpTitle.classList.add("fp-title-enter-left");
+    }
   }, 200);
 
-  // Actualiza portada
-  cover.src = track.cover;
+  fpCover.src = track.cover;
 
-  // Gradiente dinámico
+  player.src = "../audio/Warmth_Of_Christmas/" + track.file;
+  player.play();
+  updatePlayIcon(true);
+
   setDynamicGradient(track.cover);
 
-  // Mostrar reproductor
-  bar.style.bottom = "0px";
+  floatingPlayer.style.bottom = "0px";
 }
 
-
-
-/* ───────────────────────────────────────────────
-   CERRAR REPRODUCTOR
-─────────────────────────────────────────────── */
+/* Cerrar reproductor */
 function closePlayer(){
-  const bar = document.getElementById('floating-player');
-  const player = document.getElementById('player');
-
   player.pause();
-
-  // Oculta completamente según altura real
-  const height = bar.offsetHeight;
-  bar.style.bottom = `-${height}px`;
+  const height = floatingPlayer.offsetHeight;
+  floatingPlayer.style.bottom = `-${height}px`;
 }
 
-
-
-/* ───────────────────────────────────────────────
-   GRADIENTE DINÁMICO SEGÚN PORTADA
-─────────────────────────────────────────────── */
+/* Gradiente dinámico según portada */
 function setDynamicGradient(imageSrc){
-  const playerBar = document.getElementById('floating-player');
-
   const img = new Image();
   img.crossOrigin = "anonymous";
   img.src = imageSrc;
@@ -326,113 +498,104 @@ function setDynamicGradient(imageSrc){
     const col2 = `rgba(${c2[0]}, ${c2[1]}, ${c2[2]}, 0.6)`;
     const col3 = `rgba(${c3[0]}, ${c3[1]}, ${c3[2]}, 0.6)`;
 
-    playerBar.style.background =
+    floatingPlayer.style.background =
       `linear-gradient(135deg, ${col1}, ${col2}, ${col3})`;
   };
 }
 
-
-
-/* ───────────────────────────────────────────────
-   BARRA DE PROGRESO PERSONALIZADA
-─────────────────────────────────────────────── */
-const player = document.getElementById("player");
-
+/* Barra de progreso */
 player.addEventListener("timeupdate", () => {
+  if (!player.duration) return;
   const percent = (player.currentTime / player.duration) * 100;
-  document.getElementById("fp-progress").style.width = percent + "%";
+  fpProgress.style.width = percent + "%";
 });
 
-document.getElementById("fp-progress-container").addEventListener("click", (e) => {
-  const rect = e.target.getBoundingClientRect();
+fpProgressContainer.addEventListener("click", (e) => {
+  const rect = fpProgressContainer.getBoundingClientRect();
   const x = e.clientX - rect.left;
   const percent = x / rect.width;
-  player.currentTime = percent * player.duration;
+  if (player.duration) {
+    player.currentTime = percent * player.duration;
+  }
 });
 
-
-
-/* ───────────────────────────────────────────────
-   SIGUIENTE / ANTERIOR
-─────────────────────────────────────────────── */
+/* Siguiente / anterior */
 function nextTrack(){
-  currentIndex = (currentIndex + 1) % playlist.length;
-  playIndex(currentIndex);
+  const nextIndex = (currentIndex + 1) % playlist.length;
+  playIndex(nextIndex, 'forward');
 }
 
 function prevTrack(){
-  currentIndex = (currentIndex - 1 + playlist.length) % playlist.length;
-  playIndex(currentIndex);
+  const prevIndex = (currentIndex - 1 + playlist.length) % playlist.length;
+  playIndex(prevIndex, 'backward');
 }
 
-
-
-/* ───────────────────────────────────────────────
-   REPETIR / ALEATORIO
-─────────────────────────────────────────────── */
-let repeat = false;
-let shuffle = false;
-
+/* Repetir / aleatorio */
 function toggleRepeat(){
   repeat = !repeat;
-  document.getElementById("fp-repeat").style.opacity = repeat ? 1 : 0.4;
+  if (repeat) {
+    fpRepeatBtn.classList.add("active");
+  } else {
+    fpRepeatBtn.classList.remove("active");
+  }
 }
 
 function toggleShuffle(){
   shuffle = !shuffle;
-  document.getElementById("fp-shuffle").style.opacity = shuffle ? 1 : 0.4;
+  if (shuffle) {
+    fpShuffleBtn.classList.add("active");
+  } else {
+    fpShuffleBtn.classList.remove("active");
+  }
 }
 
 player.addEventListener("ended", () => {
   if(repeat){
-    playIndex(currentIndex);
+    playIndex(currentIndex, 'forward');
     return;
   }
 
   if(shuffle){
-    currentIndex = Math.floor(Math.random() * playlist.length);
-    playIndex(currentIndex);
+    const randomIndex = Math.floor(Math.random() * playlist.length);
+    playIndex(randomIndex, 'forward');
     return;
   }
 
   nextTrack();
 });
 
+/* Play / pausa */
+function updatePlayIcon(isPlaying){
+  if (isPlaying) {
+    // icono pausa
+    fpPlayIcon.innerHTML = '<path d="M7 5h3v14H7zM14 5h3v14h-3z"/>';
+  } else {
+    // icono play
+    fpPlayIcon.innerHTML = '<path d="M8 5v14l11-7z"/>';
+  }
+}
 
-
-/* ───────────────────────────────────────────────
-   EXPANDIR MINI‑PLAYER
-─────────────────────────────────────────────── */
-document.getElementById("floating-player").addEventListener("click", (e) => {
-  if(e.target.id === "fp-close") return;
-  e.currentTarget.classList.toggle("expanded");
+fpPlayBtn.addEventListener("click", (e) => {
+  e.stopPropagation(); // no expandir
+  if (player.paused) {
+    player.play();
+    updatePlayIcon(true);
+  } else {
+    player.pause();
+    updatePlayIcon(false);
+  }
 });
 
+/* Sincronizar icono play/pausa con el propio audio */
+player.addEventListener("play", () => updatePlayIcon(true));
+player.addEventListener("pause", () => updatePlayIcon(false));
+
+/* Modo expandido: click en el fondo del player (no en botones con .no-expand) */
+floatingPlayer.addEventListener("click", (e) => {
+  if (e.target.closest(".no-expand")) return;
+  floatingPlayer.classList.toggle("expanded");
+});
 </script>
-
-  
-<div id="floating-player">
-  <div class="fp-content">
-    <img id="fp-cover" src="../img/portadaWarmthOfChristmas.png">
-    <div class="fp-text">
-      <div id="fp-title">Reproduciendo...</div>
-    </div>
-    <button id="fp-close" onclick="closePlayer()">✕</button>
-    <button id="fp-prev" onclick="prevTrack()">⏮</button>
-    <button id="fp-next" onclick="nextTrack()">⏭</button>
-    <button id="fp-repeat" onclick="toggleRepeat()">🔁</button>
-    <button id="fp-shuffle" onclick="toggleShuffle()">🔀</button>
-
-
-  </div>
-<audio id="player"></audio>
-
-<div id="fp-progress-container">
-  <div id="fp-progress"></div>
-</div>
-
-</div>
 
 </body>
 </html>
-
