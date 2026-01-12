@@ -53,17 +53,16 @@ body {
   padding:12px 8px;
   margin:10px auto;
   max-width:90%;
-  border-radius:12px;
+  border-radius:0; /* SIN REDONDEO */
   cursor:pointer;
   border:1px solid rgba(255,255,255,0.08);
-
-  /* Opción C — Tarjeta moderna */
   background:linear-gradient(
     to bottom,
     rgba(255,255,255,0.05),
     rgba(255,255,255,0.15)
   );
 }
+
 
 .track:hover {
   background:linear-gradient(
@@ -76,13 +75,13 @@ body {
 .track-info {
   display:flex;
   align-items:center;
-  gap:12px;
+  gap:20px;
   flex:1;
 }
 
 .track img {
-  width:40px;
-  height:40px;
+  width:45px;
+  height:45px;
   border-radius:6px;
   object-fit:cover;
 }
@@ -209,8 +208,10 @@ body {
 
 .fp-btn.toggle.active svg {
   fill:#ffd966;
+  stroke:#ffd966; /* para iconos que usan stroke (aleatorio) */
   opacity:1;
 }
+
 
 /* Barra progreso */
 #fp-progress-container {
@@ -284,6 +285,10 @@ body {
 @keyframes enterLeft { from{opacity:0;transform:translateX(30px);} to{opacity:1;transform:translateX(0);} }
 @keyframes exitRight { from{opacity:1;transform:translateX(0);} to{opacity:0;transform:translateX(30px);} }
 @keyframes enterRight { from{opacity:0;transform:translateX(-30px);} to{opacity:1;transform:translateX(0);} }
+
+   .bottom-spacer {
+  height: 260px; /* aprox. altura de 3 canciones */
+}
 
 </style>
 </head>
@@ -387,6 +392,9 @@ body {
   </div>
 
 </div>
+
+   <div class="bottom-spacer"></div>
+
 
 </body>
 
