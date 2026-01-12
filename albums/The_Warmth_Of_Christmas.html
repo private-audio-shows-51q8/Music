@@ -131,6 +131,59 @@ a.download {
   border-radius: 6px;
 }
 
+  /* Animación de salida del título */
+.fp-title-exit {
+  animation: titleExit 0.35s forwards ease;
+}
+
+@keyframes titleExit {
+  0% { opacity: 1; transform: translateX(0); }
+  100% { opacity: 0; transform: translateX(-30px); }
+}
+
+/* Animación de entrada del nuevo título */
+.fp-title-enter {
+  animation: titleEnter 0.35s forwards ease;
+}
+
+@keyframes titleEnter {
+  0% { opacity: 0; transform: translateX(30px); }
+  100% { opacity: 1; transform: translateX(0); }
+}
+
+  #fp-progress-container {
+  width: 100%;
+  height: 6px;
+  background: rgba(255,255,255,0.15);
+  border-radius: 3px;
+  margin-top: 10px;
+  cursor: pointer;
+  overflow: hidden;
+}
+
+#fp-progress {
+  width: 0%;
+  height: 100%;
+  background: rgba(255,255,255,0.6); /* se actualizará con el gradiente dinámico */
+  transition: width 0.1s linear;
+}
+
+#fp-prev, #fp-next {
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 22px;
+  cursor: pointer;
+  margin-left: 10px;
+}
+
+  #floating-player.expanded {
+  height: 80vh;
+  border-radius: 20px 20px 0 0;
+  padding-top: 30px;
+  transition: all 0.4s ease;
+}
+
   
 </style>
   
@@ -149,7 +202,7 @@ a.download {
 
 <!-- CANCIÓN 1 --> 
 <div class="track"> 
-  <div class="track-info" onclick="play('01._So_This_Is_Christmas.MP3', this)"> 
+  <div class="track-info" onclick="playIndex(0)"> 
     <img src="../img/portadaWarmthOfChristmas.png"> 
     So This Is Christmas 
 </div>
@@ -163,7 +216,7 @@ Descargar
   
 <!-- CANCIÓN 2 --> 
 <div class="track"> 
-  <div class="track-info" onclick="play('02.%20The%20Warmth%20Of%20Christmas.MP3', this)">
+  <div class="track-info" onclick="playIndex(1)">
     <img src="../img/portadaWarmthOfChristmas.png"> 
     The Warmth Of Christmas 
 </div>
@@ -175,50 +228,89 @@ Descargar
 </div>
 
 <script>
-function play(file, element){
+
+const playlist = [
+  {
+    file: "01._So_This_Is_Christmas.MP3",
+    title: "So This Is Christmas",
+    cover: "../img/portadaWarmthOfChristmas.png"
+  },
+  {
+    file: "02.%20The%20Warmth%20Of%20Christmas.MP3",
+    title: "The Warmth Of Christmas",
+    cover: "../img/portadaWarmthOfChristmas.png"
+  }
+];
+
+let currentIndex = 0;
+
+
+
+/* ───────────────────────────────────────────────
+   REPRODUCIR CANCIÓN POR ÍNDICE
+─────────────────────────────────────────────── */
+function playIndex(i){
+  currentIndex = i;
+
+  const track = playlist[i];
   const player = document.getElementById('player');
   const bar = document.getElementById('floating-player');
   const title = document.getElementById('fp-title');
   const cover = document.getElementById('fp-cover');
 
   // Actualiza audio
-  player.src = "../audio/Warmth_Of_Christmas/" + file;
+  player.src = "../audio/Warmth_Of_Christmas/" + track.file;
   player.play();
 
-  // Obtiene el texto del track pulsado
-  const trackName = element.querySelector("img").nextSibling.textContent.trim();
-  title.textContent = trackName;
+  // Animación del título
+  title.classList.remove("fp-title-enter");
+  title.classList.add("fp-title-exit");
 
-  // Actualiza portada del mini-player
-  const coverSrc = element.querySelector("img").src;
-  cover.src = coverSrc;
+  setTimeout(() => {
+    title.textContent = track.title;
+    title.classList.remove("fp-title-exit");
+    title.classList.add("fp-title-enter");
+  }, 200);
 
-  // Genera gradiente dinámico
-  setDynamicGradient(coverSrc);
+  // Actualiza portada
+  cover.src = track.cover;
 
-  // Muestra el mini-player con animación
-  bar.style.bottom = "0";
+  // Gradiente dinámico
+  setDynamicGradient(track.cover);
+
+  // Mostrar reproductor
+  bar.style.bottom = "0px";
 }
 
 
-  function closePlayer(){
+
+/* ───────────────────────────────────────────────
+   CERRAR REPRODUCTOR
+─────────────────────────────────────────────── */
+function closePlayer(){
   const bar = document.getElementById('floating-player');
   const player = document.getElementById('player');
 
   player.pause();
-  bar.style.bottom = "-120px";
+
+  // Oculta completamente según altura real
+  const height = bar.offsetHeight;
+  bar.style.bottom = `-${height}px`;
 }
 
-  function setDynamicGradient(imageSrc){
+
+
+/* ───────────────────────────────────────────────
+   GRADIENTE DINÁMICO SEGÚN PORTADA
+─────────────────────────────────────────────── */
+function setDynamicGradient(imageSrc){
   const playerBar = document.getElementById('floating-player');
 
-  // Creamos una imagen temporal para extraer colores
   const img = new Image();
   img.crossOrigin = "anonymous";
   img.src = imageSrc;
 
   img.onload = function(){
-    // Creamos un canvas para leer los píxeles
     const canvas = document.createElement("canvas");
     const ctx = canvas.getContext("2d");
 
@@ -226,24 +318,98 @@ function play(file, element){
     canvas.height = img.height;
     ctx.drawImage(img, 0, 0);
 
-    // Tomamos 3 píxeles representativos
     const c1 = ctx.getImageData(10, 10, 1, 1).data;
     const c2 = ctx.getImageData(img.width/2, img.height/2, 1, 1).data;
     const c3 = ctx.getImageData(img.width-10, img.height-10, 1, 1).data;
 
-    // Convertimos a rgba con 60% transparencia
     const col1 = `rgba(${c1[0]}, ${c1[1]}, ${c1[2]}, 0.6)`;
     const col2 = `rgba(${c2[0]}, ${c2[1]}, ${c2[2]}, 0.6)`;
     const col3 = `rgba(${c3[0]}, ${c3[1]}, ${c3[2]}, 0.6)`;
 
-    // Aplicamos el gradiente dinámico
-    playerBar.style.background = 
+    playerBar.style.background =
       `linear-gradient(135deg, ${col1}, ${col2}, ${col3})`;
   };
 }
 
 
+
+/* ───────────────────────────────────────────────
+   BARRA DE PROGRESO PERSONALIZADA
+─────────────────────────────────────────────── */
+const player = document.getElementById("player");
+
+player.addEventListener("timeupdate", () => {
+  const percent = (player.currentTime / player.duration) * 100;
+  document.getElementById("fp-progress").style.width = percent + "%";
+});
+
+document.getElementById("fp-progress-container").addEventListener("click", (e) => {
+  const rect = e.target.getBoundingClientRect();
+  const x = e.clientX - rect.left;
+  const percent = x / rect.width;
+  player.currentTime = percent * player.duration;
+});
+
+
+
+/* ───────────────────────────────────────────────
+   SIGUIENTE / ANTERIOR
+─────────────────────────────────────────────── */
+function nextTrack(){
+  currentIndex = (currentIndex + 1) % playlist.length;
+  playIndex(currentIndex);
+}
+
+function prevTrack(){
+  currentIndex = (currentIndex - 1 + playlist.length) % playlist.length;
+  playIndex(currentIndex);
+}
+
+
+
+/* ───────────────────────────────────────────────
+   REPETIR / ALEATORIO
+─────────────────────────────────────────────── */
+let repeat = false;
+let shuffle = false;
+
+function toggleRepeat(){
+  repeat = !repeat;
+  document.getElementById("fp-repeat").style.opacity = repeat ? 1 : 0.4;
+}
+
+function toggleShuffle(){
+  shuffle = !shuffle;
+  document.getElementById("fp-shuffle").style.opacity = shuffle ? 1 : 0.4;
+}
+
+player.addEventListener("ended", () => {
+  if(repeat){
+    playIndex(currentIndex);
+    return;
+  }
+
+  if(shuffle){
+    currentIndex = Math.floor(Math.random() * playlist.length);
+    playIndex(currentIndex);
+    return;
+  }
+
+  nextTrack();
+});
+
+
+
+/* ───────────────────────────────────────────────
+   EXPANDIR MINI‑PLAYER
+─────────────────────────────────────────────── */
+document.getElementById("floating-player").addEventListener("click", (e) => {
+  if(e.target.id === "fp-close") return;
+  e.currentTarget.classList.toggle("expanded");
+});
+
 </script>
+
   
 <div id="floating-player">
   <div class="fp-content">
@@ -252,8 +418,19 @@ function play(file, element){
       <div id="fp-title">Reproduciendo...</div>
     </div>
     <button id="fp-close" onclick="closePlayer()">✕</button>
+    <button id="fp-prev" onclick="prevTrack()">⏮</button>
+    <button id="fp-next" onclick="nextTrack()">⏭</button>
+    <button id="fp-repeat" onclick="toggleRepeat()">🔁</button>
+    <button id="fp-shuffle" onclick="toggleShuffle()">🔀</button>
+
+
   </div>
-  <audio id="player" controls></audio>
+<audio id="player"></audio>
+
+<div id="fp-progress-container">
+  <div id="fp-progress"></div>
+</div>
+
 </div>
 
 </body>
