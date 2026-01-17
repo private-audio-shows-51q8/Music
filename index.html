@@ -1,18 +1,364 @@
+<head>
+<meta charset="UTF-8">
 <meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<a href="albums/The_Warmth_Of_Christmas.html">
+<style>
+body {
+  margin:0;
+  padding:0;
+  font-family:'Montserrat', sans-serif;
+  color:white;
+  background:linear-gradient(to bottom,
+    rgba(17,150,200,1),
+    rgba(10,40,55,0.8),
+    rgba(2,20,28,10.8)
+  );
+  background-attachment:fixed;
+}
 
-  <img src="img/portadaWarmthOfChristmas.png" width="150">
-  <p>The Warmth Of Christmas</p>
-</a>
+/* CABECERA */
+.cabecera {
+  width: 100%;
+  box-shadow: 0 18px 30px rgba(0,0,0,0.25);
+  opacity: 0;
+  max-height: 0;
+  overflow: hidden;
+  animation: expandHeader 3s ease-out forwards;
+}
+
+@keyframes expandHeader {
+  from {
+    max-height: 0;
+    opacity: 0;
+  }
+  to {
+    max-height: 400px; /* la altura final que quieras */
+    opacity: 1;
+  }
+}
+
+.cabecera img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* AÑOS PUBLICACION */
+.album {
+  width:100%;
+  margin:30px auto 13px auto;
+  padding:0;
+  min-width:380px;
+  border-radius:6;
+  border:1px solid rgba(255,255,255,0.08);
+  background:linear-gradient(
+    to bottom,
+    rgba(50,50,50,0.3),
+    rgba(100,100,100,0.7)
+  );
+  box-shadow: 0 6px 20px rgba(0,0,0,0.45);
+}
+
+.album-title {
+  text-align:left;
+  font-size:90%;
+  font-weight:600;
+  margin:12px auto 8px auto;
+  margin-left:45px;
+  color:#fff;
+}
+
+/* CASILLAS ALBUMES */
+.track {
+  opacity: 0;
+  transform: translateX(-70px);
+  animation: slideIn 0.6s ease-out forwards;
+
+  gap: 25px;
+  backdrop-filter: blur(6px);
+  transition: all 0.3s ease;
+
+  text-decoration: none;
+  color: inherit;
+  display:flex;
+  padding:5px 8px;
+  margin:10px auto;
+  width:90%;
+  min-width:380px;
+  border-radius:6;
+  cursor:pointer;
+  border:1px solid rgba(255,255,255,0.08);
+  border-radius:1px;
+  box-shadow: 0 12px 25px rgba(0,0,0,0.40);
+  background:linear-gradient(
+    to bottom,
+    rgba(50,50,50,0.1),
+    rgba(120,120,120,0.3)
+  );
+}
+
+@keyframes slideIn {
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.track:hover {
+  background:linear-gradient(
+    to bottom,
+    rgba(50,50,50,0.25),
+    rgba(120,120,120,0.45)
+  );
+}
+
+.track img {
+  align-items:center;
+  width:100px;
+  height:100px;
+  border-radius:6px;
+  object-fit:cover;
+  box-shadow:0 6px 14px rgba(0,0,0,0.55);
+}
+
+.track-title {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  font-weight:600;
+  font-size:95%;
+  margin-bottom:9px;
+  margin-top:18px;
+  color:#fff;
+}
+
+.track-sub {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  font-size:80%;
+  margin-bottom:4px;
+  color:#fff;
+}
+
+.track-count {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  font-size:80%;
+  color:#aaa;
+}
+
+</style>
+</head>
 
 
-<a href="albums/Music_Stars_Shine_Bright.html">
-    <img src="img/portadaMusicStars.png" width="150">
-  <p>Music Stars Shine Bright</p>
-</a>
 
-<a href="albums/Celebration.html">
-    <img src="img/portadaCelebration.png" width="150">
-  <p>Celebration</p>
-</a>
+
+
+
+<body>
+<div class="cabecera">
+  <img src="img/SHOWTracks.PNG" alt="Cabecera de la web">
+</div>
+<!---------------------------- ULTIMO LANZAMIENTO ------------------------------------->
+<div class="album">
+      <div class="album-title">Último Lanzamiento</div>
+</div>
+
+
+<!----------------------------------------------------------------->
+<a class="track"                      href="albums/The_Warmth_Of_Christmas.html"> 
+
+<img src="img/portadaWarmthOfChristmas.png"><div>  
+<div class="track-title">The Warmth Of Christmas</div>
+<div class="track-sub">2025</div>
+<div class="track-count">8 canciones, 20min 57s</div>   
+</div></a>
+<!----------------------------------------------------------------->
+
+
+
+
+<!---------------------------- 2025 ------------------------------------->
+<div class="album">
+      <div class="album-title">2025</div>
+</div>
+
+<!----------------------------------------------------------------->
+<a class="track"                      href="albums/Music_Stars_Shine_Bright.html"> 
+
+<img src="img/portadaMusicStars.png"><div>  
+<div class="track-title">Music Stars Shine Bright</div>
+<div class="track-sub">2025</div>
+<div class="track-count">8 canciones, 32min 35s</div>   
+</div></a>
+<!----------------------------------------------------------------->
+<!----------------------------------------------------------------->
+<a class="track"                      href="albums/Aires_de_Carnaval_2025.html"> 
+
+<img src="img/portadaAiresdeCarnaval2025.png"><div>  
+<div class="track-title">Aires de Carnaval</div>
+<div class="track-sub">2025</div>
+<div class="track-count">8 canciones, 20min 57s</div>   
+</div></a>
+<!----------------------------------------------------------------->
+
+
+
+
+<!---------------------------- 2024 ------------------------------------->
+<div class="album">
+      <div class="album-title">2024</div>
+</div>
+
+<!----------------------------------------------------------------->
+<a class="track"                      href="albums/Regalo_de_Navidad.html"> 
+
+<img src="img/portadaRegalodeNavidad.png"><div>  
+<div class="track-title">Regalo de Navidad</div>
+<div class="track-sub">2024</div>
+<div class="track-count">9 canciones, 32min 58s</div>   
+</div></a>
+<!----------------------------------------------------------------->
+<!----------------------------------------------------------------->
+<a class="track"                      href="albums/Halloween_Factory.html"> 
+
+<img src="img/portadaHalloweenFactory.png"><div>  
+<div class="track-title">Halloween Factory</div>
+<div class="track-sub">2024</div>
+<div class="track-count">7 canciones, 24min 12s</div>   
+</div></a>
+<!----------------------------------------------------------------->
+<!----------------------------------------------------------------->
+<a class="track"                      href="albums/Lets_Travel.html"> 
+
+<img src="img/portadaLetsTravel.png"><div>  
+<div class="track-title">Let's Travel</div>
+<div class="track-sub">2024</div>
+<div class="track-count">8 canciones, 25min 47s</div>   
+</div></a>
+<!----------------------------------------------------------------->
+<!----------------------------------------------------------------->
+<a class="track"                      href="albums/Aires_de_Carnaval.html"> 
+
+<img src="img/portadaAiresdeCarnaval2024.png"><div>  
+<div class="track-title">Aires de Carnaval</div>
+<div class="track-sub">2024</div>
+<div class="track-count">5 canciones, 14min 46s</div>   
+</div></a>
+<!----------------------------------------------------------------->
+
+
+
+<!---------------------------- 2023 ------------------------------------->
+<div class="album">
+      <div class="album-title">2023</div>
+</div>
+<!----------------------------------------------------------------->
+<a class="track"                      href="albums/Our_Little_Merry_Christmas.html"> 
+
+<img src="img/portadaOurLittleMerryChristmas.png"><div>  
+<div class="track-title">Our Little Merry Christmas</div>
+<div class="track-sub">2023</div>
+<div class="track-count">10 canciones, 31min 48s</div>   
+</div></a>
+<!----------------------------------------------------------------->
+<!----------------------------------------------------------------->
+<a class="track"                      href="albums/Halloween_Forever_II.html"> 
+
+<img src="img/portadaHalloweenForeverII.png"><div>  
+<div class="track-title">Halloween Forever II</div>
+<div class="track-sub">2023</div>
+<div class="track-count">8 canciones, 26min 57s</div>   
+</div></a>
+<!----------------------------------------------------------------->
+<!----------------------------------------------------------------->
+<a class="track"                      href="albums/Destination_Dance.html"> 
+
+<img src="img/portadaDestinationDance.png"><div>  
+<div class="track-title">Destination Dance</div>
+<div class="track-sub">2023</div>
+<div class="track-count">9 canciones, 28min 53s</div>   
+</div></a>
+<!----------------------------------------------------------------->
+<!----------------------------------------------------------------->
+<a class="track"                      href="albums/Celebration.html"> 
+
+<img src="img/portadaCelebration.png"><div>  
+<div class="track-title">Celebration</div>
+<div class="track-sub">2023</div>
+<div class="track-count">10 canciones, 32min 51s</div>   
+</div></a>
+<!----------------------------------------------------------------->
+
+
+
+<!---------------------------- 2022 ------------------------------------->
+<div class="album">
+      <div class="album-title">2022</div>
+</div>
+
+<!----------------------------------------------------------------->
+<a class="track"                      href="albums/Dreaming_On_Ice.html"> 
+
+<img src="img/portadaDreamingOnIce.png"><div>  
+<div class="track-title">Dreaming On Ice</div>
+<div class="track-sub">2022</div>
+<div class="track-count">12 canciones, 39min 25s</div>   
+</div></a>
+<!----------------------------------------------------------------->
+<!----------------------------------------------------------------->
+<a class="track"                      href="albums/Halloween_Forever.html"> 
+
+<img src="img/portadaHalloweenForever.png"><div>  
+<div class="track-title">Halloween Forever</div>
+<div class="track-sub">2022</div>
+<div class="track-count">10 canciones, 31min 50s</div>   
+</div></a>
+<!----------------------------------------------------------------->
+<!----------------------------------------------------------------->
+<a class="track"                      href="albums/Around_The_World.html"> 
+
+<img src="img/portadaAroundtheWorld.png"><div>  
+<div class="track-title">Around The World</div>
+<div class="track-sub">2022</div>
+<div class="track-count">10 canciones, 30min 56s</div>   
+</div></a>
+<!----------------------------------------------------------------->
+
+
+</body>
+
+
+
+
+
+<script>
+
+const c2 = [17,150,200];
+
+setDynamicGradient();
+
+/* OSCURECER COLOR */
+function darkenColor(r,g,b,amount){
+  return `rgba(${Math.floor(r*amount)}, ${Math.floor(g*amount)}, ${Math.floor(b*amount)}, 1)`;}
+
+/* GRADIENTE DINÁMICO */
+function setDynamicGradient() {
+  const fon1 = darkenColor(c2[0], c2[1], c2[2], 0.80);
+  const fon2 = darkenColor(c2[0], c2[1], c2[2], 0.30);
+  const fon3 = darkenColor(c2[0], c2[1], c2[2], 0.06);
+  document.body.style.background =
+    `linear-gradient(to bottom, ${fon1}, ${fon2}, ${fon3})`;}
+
+
+  document.addEventListener("DOMContentLoaded", () => {
+    document.querySelectorAll('.track').forEach((el, i) => {
+      el.style.animationDelay = `${i * 0.1}s`;
+    });
+  });
+</script>
+
+
