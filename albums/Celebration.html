@@ -14,6 +14,12 @@ body {
   background-attachment:fixed;
 }
 
+    a:focus, a:active,
+button:focus, button:active {
+  outline: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
 /* PORTADA + INFO ÁLBUM */
 .album {
   max-width:90%;
@@ -107,6 +113,16 @@ body {
     rgba(255,255,255,0.02),
     rgba(255,255,255,0.11)
   );
+  opacity: 0;
+  transform: translateX(-70px);
+  animation: slideIn 0.6s ease-out forwards;
+}
+
+  @keyframes slideIn {
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }
 
 .track:hover {
@@ -645,6 +661,30 @@ const playAllBtn = document.getElementById("play-all");
 setDynamicGradient();
 
 
+  
+  /* ============================
+   PRECARGA AUTOMÁTICA DE AUDIOS
+   ============================ */
+function precargarAudios() {
+  trackElements.forEach((trackEl, i) => {
+    const audio = new Audio();
+    audio.preload = "auto";
+    audio.src = audioBasePath + trackEl.dataset.file;
+    audio.load();
+  });
+}
+
+precargarAudios();
+
+  document.addEventListener("DOMContentLoaded", () => {
+    document.querySelectorAll('.track').forEach((el, i) => {
+      el.style.animationDelay = `${i * 0.1}s`;
+    });
+  });
+
+
+  
+  
 /* CLICK EN CANCIONES */
 trackElements.forEach((trackEl, index) => {
   trackEl.addEventListener("click", () => playIndex(index, "forward"));
