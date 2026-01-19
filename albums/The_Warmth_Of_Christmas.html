@@ -5,6 +5,7 @@
 <title>The Warmth Of Christmas</title>
   
 <style>
+    * { user-select: none; }
 body {
   margin:0;
   padding:0;
@@ -13,7 +14,9 @@ body {
   background:rgba(0,0,0,1);
   background-attachment:fixed;
 }
-
+* {
+  -webkit-tap-highlight-color: transparent;
+}
 /* PORTADA + INFO ÁLBUM */
 .album {
   max-width:90%;
@@ -82,8 +85,21 @@ body {
   font-size:70%;
   background:transparent;
   box-shadow:0 6px 14px rgba(0,0,0,0.45);
+  position: relative;
+  overflow: hidden;
   }
+.playall-btn:active::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(255,255,255,0.15);
+  animation: flash .15s ease-out;
+}
 
+@keyframes flash {
+  from { opacity: 1; }
+  to   { opacity: 0; }
+}
 
 .playall-btn svg {
   width:20px;
@@ -107,14 +123,23 @@ body {
     rgba(255,255,255,0.02),
     rgba(255,255,255,0.11)
   );
+  opacity: 0;
+  transform: translateX(-70px);
+  animation: slideIn 0.6s ease-out forwards;
 }
 
-.track:hover {
-  background:linear-gradient(
-    to bottom,
-    rgba(255,255,255,0.03),
-    rgba(255,255,255,0.15)
-  );
+@keyframes slideIn {
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+.track:active::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(255,255,255,0.15);
+  animation: flash .15s ease-out;
 }
 
 .track-info {
@@ -180,8 +205,10 @@ body {
   padding:16px;
   box-sizing:border-box;
   border-top:1px solid rgba(255,255,255,0.1);
-  transition:bottom .35s ease;
-  z-index:999;
+  z-index: 999;
+  transition:
+    bottom .35s ease,
+    padding-top .35s ease;
 }
 
   /* Flecha colapso centrada */
@@ -237,6 +264,7 @@ body {
   flex:1;
   text-align:left;
 }
+    .fp-cover, .fp-text { transition: all .35s ease; }
 
 #fp-title {
   font-weight:700;
@@ -259,6 +287,8 @@ body {
   align-items:center;
   gap:35px;
   margin-top:12px;
+  margin-bottom:18px;
+  position: relative;
 }
 
 .fp-btn {
@@ -304,7 +334,7 @@ body {
   height:8px;
   background:rgba(255,255,255,0.12);
   border-radius:4px;
-  margin-top:14px;
+  margin-top:10px;
   position:relative;
   cursor:pointer;
 }
@@ -325,12 +355,16 @@ body {
   background:white;
   border-radius:50%;
 }
-
+#floating-player .fp-content,
+#floating-player .fp-controls-row,
+#floating-player #fp-progress-container {
+  transition: all .35s ease;
+}
 /* EXPANDIDO */
 #floating-player.expanded {
-  height:78vh;
-  border-radius:20px 20px 0 0;
-  padding-top:40px;
+  padding-top: 40px;
+  border-radius: 20px 20px 0 0;
+  bottom: 0;
 }
 
 #floating-player.expanded #fp-collapse {
@@ -591,7 +625,7 @@ body {
    CONFIGURACIÓN POR ÁLBUM
    ======================================================================================================CAMBIAR RUTA AUDIOS Y PORTADA ALBUM; colores RGB============================== */
 const audioBasePath = "../audio/Warmth_Of_Christmas/";
-const defaultCover  = "../img/portadaWarmthOfChristmas.png";
+const defaultCover  = "../img/portadaWarmthOfChristmas.webp";
 
 /* COLORES DEL ÁLBUM (RGB) */
 const c  = [186, 48, 24];   // color principal[154, 18, 29]
@@ -627,7 +661,25 @@ const fpSub3 = document.querySelector(".fp-sub3");
 const playAllBtn = document.getElementById("play-all");
 
 setDynamicGradient();
+  /* ============================
+   PRECARGA AUTOMÁTICA DE AUDIOS
+   ============================ */
+function precargarAudios() {
+  trackElements.forEach((trackEl, i) => {
+    const audio = new Audio();
+    audio.preload = "auto";
+    audio.src = audioBasePath + trackEl.dataset.file;
+    audio.load();
+  });
+}
 
+precargarAudios();
+
+  document.addEventListener("DOMContentLoaded", () => {
+    document.querySelectorAll('.track').forEach((el, i) => {
+      el.style.animationDelay = `${i * 0.1}s`;
+    });
+  });
 
 /* CLICK EN CANCIONES */
 trackElements.forEach((trackEl, index) => {
