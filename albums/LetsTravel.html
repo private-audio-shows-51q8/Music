@@ -5,105 +5,95 @@
 <title>Let's Travel</title> <!---------------------------------------------------------------CAMBIAR--------------------------------------------------------------->
   
 <style>  * { user-select: none; }
-body {  margin:0;  padding:0;  font-family:'Montserrat', sans-serif;  color:white;  background:rgba(0,0,0,1);  background-attachment:fixed;}
-* {  -webkit-tap-highlight-color: transparent;}
+body {  margin:0;  padding:0;  font-family:'Montserrat', sans-serif;  color:white;  background:rgba(0,0,0,1);  background-attachment:fixed;} * {  -webkit-tap-highlight-color: transparent;}
 
 /* PORTADA + INFO ÁLBUM */
 .album {  max-width:90%;  margin:20px auto 10px auto;  padding:0;}
 .cover {  width:100%;  max-width:310px;  border-radius:12px;  display:block;  margin:auto;  box-shadow:0 18px 38px rgba(0,0,0,0.55);}
-
-.album-info {width:55%;  min-width:340px;  margin-top:50px;  margin-bottom:15px;  margin:10px auto;  display:flex;  flex-wrap: wrap;  justify-content:space-between;  align-items:center;  background:transparent;}
-.album-text {  text-align:left;}
-.album-title {  font-size:150%;  font-weight:700;    margin-bottom:8px;}
-.album-year {font-size:90%;  color:white; margin-bottom:4px;}
+.album-info {width:55%; min-width:340px; margin-top:50px; margin-bottom:15px; margin:10px auto; display:flex; flex-wrap: wrap; justify-content:space-between; align-items:center; background:transparent;}
+.album-text {text-align:left;}
+.album-title {font-size:150%;  font-weight:700;    margin-bottom:8px;}
+.album-year {  font-size:90%;  color:white;  margin-bottom:4px;}
 .album-count {  font-size:90%;  color:#ccc;}
 
 /* BOTÓN REPRODUCIR TODO */
-.playall-btn {  white-space: nowrap;  flex-shrink: 1;  display:flex;  align-items:center;  gap:5px;  padding:10px 15px;  border-radius:40px;  border:none;  cursor:pointer;  color:white;  font-weight:600;  font-size:70%;  background:transparent;  box-shadow:0 6px 14px rgba(0,0,0,0.45); position: relative; overflow: hidden;}.playall-btn:active::after {content: "";  position: absolute; inset: 0; background: rgba(255,255,255,0.15); animation: flash .15s ease-out;}@keyframes flash {from { opacity: 1; }  to   { opacity: 0; }}
-.playall-btn svg {  width:20px;  height:20px;  fill:white;}
+.playall-btn {white-space: nowrap; flex-shrink: 1; display:flex; align-items:center; gap:5px; padding:10px 15px; border-radius:40px; border:none; cursor:pointer; color:white; font-weight:600; font-size:70%;
+  background:transparent; box-shadow:0 6px 14px rgba(0,0,0,0.45); position: relative; overflow: hidden;}
+.playall-btn:active::after {content: ""; position: absolute; inset: 0; background: rgba(255,255,255,0.15); animation: flash .15s ease-out;}
+@keyframes flash {from { opacity: 1; }  to   { opacity: 0; }}
+.playall-btn svg {width:20px; height:20px;  fill:white;}
 
 /* LISTADO DE CANCIONES */
-.track {display:flex;  align-items:center;  padding:5px 8px;  margin:10px auto;  width:60%;  min-width:380px; border-radius:0;  cursor:pointer;  border:1px solid rgba(255,255,255,0.08);  background:linear-gradient(to bottom,    rgba(255,255,255,0.02),    rgba(255,255,255,0.11)  );  opacity: 0; transform: translateX(-70px); animation: slideIn 0.6s ease-out forwards;}
-@keyframes slideIn {to{opacity: 1; transform: translateX(0);}}
+.track {display:flex; align-items:center; padding:5px 8px; margin:10px auto; width:60%; min-width:380px; border-radius:0; cursor:pointer; border:1px solid rgba(255,255,255,0.08); background:linear-gradient(
+    to bottom,  rgba(255,255,255,0.02), rgba(255,255,255,0.11)); opacity: 0; transform: translateX(-70px); animation: slideIn 0.6s ease-out forwards;}
+  @keyframes slideIn {to {opacity: 1; transform: translateX(0);}}
 .track:active::after {content: ""; position: absolute; inset: 0; background: rgba(255,255,255,0.15); animation: flash .15s ease-out;}
-.track-info {  display:flex;  align-items:center;  gap:10px;  flex:1;}
-.track img {  width:55px;  height:55px;  border-radius:6px;  object-fit:cover;  box-shadow:0 6px 14px rgba(0,0,0,0.55);}
-.track-title {  font-weight:600;  font-size:95%;  margin-bottom:4px;}
-.track-sub {  font-size:80%;  color:#ccc;}
-.track-duration {  font-size:80%;  color:white;  margin-right:10px;}
+.track-info {display:flex; align-items:center; gap:10px; flex:1;}
+.track img {width:55px; height:55px; border-radius:6px; object-fit:cover; box-shadow:0 6px 14px rgba(0,0,0,0.55);}
+.track-title {font-weight:600; font-size:95%; margin-bottom:4px;}
+.track-sub {font-size:80%; color:#ccc;}
+.track-duration {font-size:80%; color:white; margin-right:10px;}
 
 /* BOTÓN DESCARGA A */
-.download-btn {  width:36px;  height:36px;  display:flex;  align-items:center;  justify-content:center;  background:transparent;  border:none;  cursor:pointer;}
-.download-btn svg {width:26px;  height:26px;  stroke:white;  stroke-width:2;  fill:none;}
+.download-btn {width:30px; height:55px; display: flex; align-items:center; justify-content:center; background:transparent; border:none; cursor:pointer; z-index: 888;}
+.download-btn svg {width:26px; height:26px; stroke:white; stroke-width:2; fill:none;}
+  .download-btn:active svg { opacity: 0.4; transform: scale(0.9); transition: opacity 0.1s ease, transform 0.1s ease; }
 
 /* MINI‑PLAYER */
-#floating-player {  position:fixed;  bottom:-100%;  left:0;  width:100%;
-  background:transparent;  backdrop-filter:blur(14px);  padding:16px;  box-sizing:border-box;  border-top:1px solid rgba(255,255,255,0.1); z-index: 999; transition: bottom .35s ease, padding-top .35s ease;}
-
+#floating-player {position: fixed; bottom: -100%; left: 0; width: 100%; background: transparent; backdrop-filter: blur(14px); padding: 16px; box-sizing: border-box; border-top: 1px solid rgba(255,255,255,0.1);
+  z-index: 999; transition: bottom .35s ease, padding-top .35s ease;}
   /* Flecha colapso centrada */
-#fp-collapse {background:transparent;  border:none;  cursor:pointer;  padding:4px;  position:absolute;  top:4px;  left:50%;  transform:translateX(-50%);  display:none;}
-
-  #fp-collapse svg {  width:26px;  height:26px;  stroke:white;  stroke-width:2;  fill:none;}
-
+#fp-collapse {background:transparent; border:none; cursor:pointer; padding:4px; position:absolute; top:4px; left:50%; transform:translateX(-50%); display:none;}
+  #fp-collapse svg {width:26px; height:26px; stroke:white; stroke-width:2; fill:none;}
   /* Botón cerrar */
-#fp-close {  position:absolute;  right:8px;  top:8px;  background:transparent;  border:none;  color:white;  font-size:20px;  cursor:pointer;}
-.fp-content {  display:flex;  align-items:center;  gap:14px;  margin-top:20px;}
-
+#fp-close {position:absolute; right:8px; top:8px; background:transparent; border:none; color:white; font-size:20px; cursor:pointer;}
+.fp-content {display:flex; align-items:center; gap:14px; margin-top:20px;}
   /* Portada mini-player */
-.fp-cover {width:130px;  height:130px;  border-radius:8px;  object-fit:cover;  box-shadow:0 6px 14px rgba(0,0,0,0.55);}
-.fp-text {  flex:1;  text-align:left;}  .fp-cover, .fp-text { transition: all .35s ease; }
+.fp-cover {width:130px; height:130px; border-radius:8px; object-fit:cover; box-shadow:0 6px 14px rgba(0,0,0,0.55);}
+.fp-text {flex:1;  text-align:left;}
+  .fp-cover, .fp-text { transition: all .35s ease; }
 #fp-title {  font-weight:700;  font-size:16px;  margin-bottom:4px;}
-.fp-sub1,.fp-sub2,.fp-sub3 {  font-size:80%;  color:#ccc;  margin-bottom:2px;}
+.fp-sub1,.fp-sub2,.fp-sub3 {font-size:80%; color:#ccc; margin-bottom:2px;}
 
-/* CONTROLES */
-.fp-controls-row {  display:flex;  justify-content:center;  align-items:center;  gap:35px;  margin-top:12px;  margin-bottom:18px; position: relative;}
-.fp-btn {  background:transparent;  border:none;  cursor:pointer;}
+  /* CONTROLES */
+.fp-controls-row {display:flex; justify-content:center; align-items:center; gap:35px; margin-top:18px; margin-bottom:18px; position: relative;}
+.fp-btn { background:transparent;  border:none;  cursor:pointer;}
 .fp-btn svg {  width:26px;  height:26px;  fill:white;  opacity:0.9;}
 .fp-btn.toggle.active svg {  fill:#ffd966;  stroke:#ffd966;  opacity:1;}
-
 /* PLAY CON CÍRCULO OSCURO */
 .fp-play-circle {width:58px; height:58px; border-radius:50%; display:flex; align-items:center; justify-content:center; background:transparent; box-shadow:0 6px 14px rgba(0,0,0,0.65);}
-.fp-play-circle svg {  width:28px;  height:28px;  fill:white;}
-
+.fp-play-circle svg { width:28px; height:28px; fill:white;}
 /* PROGRESO */
-#fp-progress-container {  width:100%;  height:8px;  background:rgba(255,255,255,0.12);  border-radius:4px;  margin-top:10px;  position:relative;  cursor:pointer;}
-#fp-progress {  height:100%;  width:0%;  background:rgba(255,255,255,0.8);}
-#fp-progress-thumb {  position:absolute;  top:50%;  left:0%;  transform:translate(-50%, -50%);  width:12px;  height:12px;  background:white;  border-radius:50%;}
-#floating-player .fp-content,#floating-player .fp-controls-row,
-#floating-player #fp-progress-container {transition: all .35s ease;}
-
+#fp-progress-container {width:100%; height:8px; background:rgba(255,255,255,0.12); border-radius:4px; margin-top:10px; position:relative; cursor:pointer;}
+#fp-progress {height:100%; width:0%; background:rgba(255,255,255,0.8);}
+#fp-progress-thumb {position:absolute; top:50%; left:0%; transform:translate(-50%, -50%); width:12px; height:12px; background:white; border-radius:50%;}
+  #floating-player .fp-content,#floating-player .fp-controls-row,#floating-player #fp-progress-container {transition: all .35s ease;}
 /* EXPANDIDO */
-#floating-player.expanded {padding-top: 40px; border-radius: 20px 20px 0 0; bottom: 0;}
+#floating-player.expanded {padding-top: 40px; border-radius: 20px 20px 0 0;  bottom: 0;}
 #floating-player.expanded #fp-collapse {  display:block;}
-#floating-player.expanded .fp-content {  flex-direction:column;  align-items:center;  text-align:center;}
-
+#floating-player.expanded .fp-content {flex-direction:column; align-items:center; text-align:center;}
   /* Portada expandida */
-#floating-player.expanded .fp-cover {  width:300px;  height:300px;  margin-bottom:10px;}
-#floating-player.expanded .fp-text {  text-align:center;}
-#floating-player.expanded .fp-controls-row {  margin-top:20px;}
-#floating-player.expanded #fp-progress-container {  margin-top:20px;}
-
+#floating-player.expanded .fp-cover {width:300px; height:300px; margin-bottom:10px;}
+#floating-player.expanded .fp-text {text-align:center;}
+#floating-player.expanded .fp-controls-row {margin-top:20px;}
+#floating-player.expanded #fp-progress-container {margin-top:20px;}
   /* Animaciones título */
 .fp-title-exit-left { animation:exitLeft .35s forwards; }
 .fp-title-enter-left { animation:enterLeft .35s forwards; }
 .fp-title-exit-right { animation:exitRight .35s forwards; }
 .fp-title-enter-right { animation:enterRight .35s forwards; }
-
 @keyframes exitLeft { from{opacity:1;transform:translateX(0);} to{opacity:0;transform:translateX(-30px);} }
 @keyframes enterLeft { from{opacity:0;transform:translateX(30px);} to{opacity:1;transform:translateX(0);} }
 @keyframes exitRight { from{opacity:1;transform:translateX(0);} to{opacity:0;transform:translateX(30px);} }
 @keyframes enterRight { from{opacity:0;transform:translateX(-30px);} to{opacity:1;transform:translateX(0);} }
-
-  .bottom-spacer {  height:320px;}
-
-  .back-btn {  position: fixed;  top: 18px;  left: 18px;  width: 38px;  height: 38px;  display: flex;  align-items: center;  justify-content: center;  background: rgba(0,0,0,0.35);
-  backdrop-filter: blur(6px);  border-radius: 50%;  box-shadow: 0 6px 14px rgba(0,0,0,0.45);  cursor: pointer;  z-index: 9999;  transition: background .25s;}
-
-.back-btn:hover {  background: rgba(255,255,255,0.15);}
-
-.back-btn svg {  width: 22px;  height: 22px;  stroke: white;  stroke-width: 2;  fill: none;}
+  .bottom-spacer { height:320px;}
+  .back-btn {position: fixed; top: 18px; left: 18px; width: 38px; height: 38px; display: flex; align-items: center; justify-content: center; background: rgba(0,0,0,0.35); backdrop-filter: blur(6px);
+  border-radius: 50%; box-shadow: 0 6px 14px rgba(0,0,0,0.45); cursor: pointer; z-index: 9999; transition: background .25s;}
+.back-btn:hover {background: rgba(255,255,255,0.15);}
+.back-btn svg {width: 22px; height: 22px; stroke: white; stroke-width: 2;  fill: none;}
 </style>
 </head>
+
 
 
 
@@ -175,59 +165,40 @@ body {  margin:0;  padding:0;  font-family:'Montserrat', sans-serif;  color:whit
 
 <!--------------------------------------------------------------------------------------------5--------------------------------------------------------------------------->
 
-                                                                                               <div class="track" data-file="05._So_This_Is_Christmas.MP3"> 
-<div class="track-info"><img class="js-cover" src="../img/portadaWarmthOfChristmas.png"><div>  <div class="track-title">So This Is Christmas
-    </div>     										       <div class="track-sub">So This Is Christmas
-    </div>   </div>  </div>							               <div class="track-duration">01:27
+                                                                                               <div class="track" data-file="05.%20Brazil's%20Carnival%20Medley.mp3"> 
+<div class="track-info"><img class="js-cover" src="../img/portadaWarmthOfChristmas.png"><div>  <div class="track-title">Brazil's Carnival Medley
+    </div>     										       <div class="track-sub">Samba Do Brasil-Aquarela Do Brasil-Magalenha-Quimbara-Cuba 2012
+    </div>   </div>  </div>							               <div class="track-duration">02:50
 
-</div><a class="download-btn" href="https://github.com/private-audio-shows-51q8/Music/releases/download/warmth_of_christmas/05.So.This.Is.Christmas.MP3" 
+</div><a class="download-btn" href="https://github.com/private-audio-shows-51q8/Music/releases/download/lets_travel/05.Brazil.s.Carnival.Medley.mp3" 
   download onclick="event.stopPropagation()"> <svg><use href="#icon-download"></use></svg></a></div>
 
 <!--------------------------------------------------------------------------------------------6--------------------------------------------------------------------------->
-                                                                                               <div class="track" data-file="06._So_This_Is_Christmas.MP3"> 
-<div class="track-info"><img class="js-cover" src="../img/portadaWarmthOfChristmas.png"><div>  <div class="track-title">So This Is Christmas
-    </div>     										       <div class="track-sub">So This Is Christmas
-    </div>   </div>  </div>							               <div class="track-duration">01:27
+                                                                                               <div class="track" data-file="06.%20New%20York%20Megamix.mp3"> 
+<div class="track-info"><img class="js-cover" src="../img/portadaWarmthOfChristmas.png"><div>  <div class="track-title">New York Megamix
+    </div>     										       <div class="track-sub">New York, New York-Show Me How You Burlesque-Yeah!-Swalla-Talk Dirty-Turn Down For What-New York, New York (FWB Remix)
+    </div>   </div>  </div>							               <div class="track-duration">05:13
 
-</div><a class="download-btn" href="https://github.com/private-audio-shows-51q8/Music/releases/download/warmth_of_christmas/06.So.This.Is.Christmas.MP3" 
+</div><a class="download-btn" href="https://github.com/private-audio-shows-51q8/Music/releases/download/lets_travel/06.New.York.Megamix.mp3" 
   download onclick="event.stopPropagation()"> <svg><use href="#icon-download"></use></svg></a></div>
 
 <!--------------------------------------------------------------------------------------------7--------------------------------------------------------------------------->
-                                                                                               <div class="track" data-file="07._So_This_Is_Christmas.MP3"> 
-<div class="track-info"><img class="js-cover" src="../img/portadaWarmthOfChristmas.png"><div>  <div class="track-title">So This Is Christmas
-    </div>     										       <div class="track-sub">So This Is Christmas
-    </div>   </div>  </div>							               <div class="track-duration">01:27
+                                                                                               <div class="track" data-file="07.%20Futuristic%20Dd%20Guetta%20Megamix.mp3"> 
+<div class="track-info"><img class="js-cover" src="../img/portadaWarmthOfChristmas.png"><div>  <div class="track-title">Futuristic Dd Guetta Megamix
+    </div>     										       <div class="track-sub">I'm Good (Blue)-I Don't Wanna Wait-Miracle-Play Hard-Little Bad Girl-Without You
+    </div>   </div>  </div>							               <div class="track-duration">04:34
 
-</div><a class="download-btn" href="https://github.com/private-audio-shows-51q8/Music/releases/download/warmth_of_christmas/07.So.This.Is.Christmas.MP3" 
+</div><a class="download-btn" href="https://github.com/private-audio-shows-51q8/Music/releases/download/lets_travel/07.Futuristic.Dd.Guetta.Megamix.mp3" 
   download onclick="event.stopPropagation()"> <svg><use href="#icon-download"></use></svg></a></div>
 
 <!--------------------------------------------------------------------------------------------8--------------------------------------------------------------------------->
-                                                                                               <div class="track" data-file="08._So_This_Is_Christmas.MP3"> 
-<div class="track-info"><img class="js-cover" src="../img/portadaWarmthOfChristmas.png"><div>  <div class="track-title">So This Is Christmas
-    </div>     										       <div class="track-sub">So This Is Christmas
-    </div>   </div>  </div>							               <div class="track-duration">01:27
+                                                                                               <div class="track" data-file="08.%20Let%E2%80%99s%20Travel%20(End%20Version).mp3"> 
+<div class="track-info"><img class="js-cover" src="../img/portadaWarmthOfChristmas.png"><div>  <div class="track-title">Let's Travel (End Version)
+    </div>     										       <div class="track-sub">Versión de cierre de la canción principal
+    </div>   </div>  </div>							               <div class="track-duration">01:22
 
-</div><a class="download-btn" href="https://github.com/private-audio-shows-51q8/Music/releases/download/warmth_of_christmas/08.So.This.Is.Christmas.MP3" 
+</div><a class="download-btn" href="https://github.com/private-audio-shows-51q8/Music/releases/download/lets_travel/08.Let.s.Travel.End.Version.mp3" 
   download onclick="event.stopPropagation()"> <svg><use href="#icon-download"></use></svg></a></div>
-
-<!--------------------------------------------------------------------------------------------9--------------------------------------------------------------------------->
-                                                                                               <div class="track" data-file="09._So_This_Is_Christmas.MP3"> 
-<div class="track-info"><img class="js-cover" src="../img/portadaWarmthOfChristmas.png"><div>  <div class="track-title">So This Is Christmas
-    </div>     										       <div class="track-sub">So This Is Christmas
-    </div>   </div>  </div>							               <div class="track-duration">01:27
-
-</div><a class="download-btn" href="https://github.com/private-audio-shows-51q8/Music/releases/download/warmth_of_christmas/09.So.This.Is.Christmas.MP3" 
-  download onclick="event.stopPropagation()"> <svg><use href="#icon-download"></use></svg></a></div>
-
-<!-------------------------------------------------------------------------------------------10--------------------------------------------------------------------------->
-                                                                                               <div class="track" data-file="10._So_This_Is_Christmas.MP3"> 
-<div class="track-info"><img class="js-cover" src="../img/portadaWarmthOfChristmas.png"><div>  <div class="track-title">So This Is Christmas
-    </div>     										       <div class="track-sub">So This Is Christmas
-    </div>   </div>  </div>							               <div class="track-duration">01:27
-
-</div><a class="download-btn" href="https://github.com/private-audio-shows-51q8/Music/releases/download/warmth_of_christmas/10.So.This.Is.Christmas.MP3" 
-  download onclick="event.stopPropagation()"> <svg><use href="#icon-download"></use></svg></a></div>
-
 <!------------------------------------------------------------------------------------------------------------------------------------------------------------------------>
 
 
@@ -239,7 +210,7 @@ body {  margin:0;  padding:0;  font-family:'Montserrat', sans-serif;  color:whit
 
 <div class="fp-text"><div id="fp-anim">  <div id="fp-title">Reproduciendo...</div>
     <div class="fp-sub2"></div>  <div class="fp-sub3"></div>
-    <div class="fp-sub1">Álbum: The Warmth Of Christmas (2025)</div> <!============================================================CAMBIAR TITULO DE ALBUM==============================>
+    <div class="fp-sub1">Álbum: Let's Travel (2024)</div> <!============================================================CAMBIAR TITULO DE ALBUM==============================>
   </div></div></div>
 
   <div class="fp-controls-row">
@@ -267,12 +238,12 @@ body {  margin:0;  padding:0;  font-family:'Montserrat', sans-serif;  color:whit
   /* ============================
    CONFIGURACIÓN POR ÁLBUM
    ======================================================================================================CAMBIAR RUTA AUDIOS Y PORTADA ALBUM; colores RGB============================== */
-const audioBasePath = "../audio/Warmth_Of_Christmas/";
-const defaultCover  = "portadaCelebration.webp";
+const audioBasePath = "../audio/LetsTravel/";
+const defaultCover  = "../img/portadaLetsTravel.webp";
 
 /* COLORES DEL ÁLBUM (RGB) */
-const c  = [208, 165, 56];   // color principal
-const c2 = [146, 107, 33];  // color secundario
+const c  = [192, 94, 53];   // color principal
+const c2 = [237, 205, 80];  // color secundario
 
 /* ===================================================================================================================================================================================== */
 
@@ -303,44 +274,117 @@ const fpSub3 = document.querySelector(".fp-sub3");
 const playAllBtn = document.getElementById("play-all");
 
 setDynamicGradient();
-  /*  PRECARGA AUTOMÁTICA DE AUDIOS */
-function precargarAudios() {trackElements.forEach((trackEl, i) => {const audio = new Audio();    audio.preload = "auto"; audio.src = audioBasePath + trackEl.dataset.file; audio.load();});}
-precargarAudios(); document.addEventListener("DOMContentLoaded", () => {document.querySelectorAll('.track').forEach((el, i) => {el.style.animationDelay = `${i * 0.1}s`;});});
+  
+  /* ============================
+   PRECARGA AUTOMÁTICA DE AUDIOS
+   ============================ */
+function precargarAudios() {
+  trackElements.forEach((trackEl, i) => {
+    const audio = new Audio();
+    audio.preload = "auto";
+    audio.src = audioBasePath + trackEl.dataset.file;
+    audio.load();
+  });
+}
+
+precargarAudios();
+
+  document.addEventListener("DOMContentLoaded", () => {
+    document.querySelectorAll('.track').forEach((el, i) => {
+      el.style.animationDelay = `${i * 0.1}s`;
+    });
+  });
+
+
+  
+  
 /* CLICK EN CANCIONES */
-trackElements.forEach((trackEl, index) => {trackEl.addEventListener("click", () => playIndex(index, "forward"));});
+trackElements.forEach((trackEl, index) => {
+  trackEl.addEventListener("click", () => playIndex(index, "forward"));
+});
 
 /* DATOS */
-function getTrackData(index){  const el = trackElements[index];  return {    file: el.dataset.file,    title: el.querySelector(".track-title").textContent.trim(),
-    contiene: el.querySelector(".track-sub").textContent.trim(),    duracion: el.querySelector(".track-duration").textContent.trim()  };}
+function getTrackData(index){
+  const el = trackElements[index];
+  return {
+    file: el.dataset.file,
+    title: el.querySelector(".track-title").textContent.trim(),
+    contiene: el.querySelector(".track-sub").textContent.trim(),
+    duracion: el.querySelector(".track-duration").textContent.trim()
+  };
+}
 
 /* REPRODUCIR */
-function playIndex(index, direction="forward"){  currentIndex = index;  const track = getTrackData(index);
+function playIndex(index, direction="forward"){
+  currentIndex = index;
+  const track = getTrackData(index);
 
-animateBlock(direction, {  title: track.title,  contiene: track.contiene,  duracion: track.duracion});
-  player.src = audioBasePath + track.file;  player.play();  updatePlayIcon(true);  floatingPlayer.style.bottom = "0px";}
+animateBlock(direction, {
+  title: track.title,
+  contiene: track.contiene,
+  duracion: track.duracion
+});
+
+
+  player.src = audioBasePath + track.file;
+  player.play();
+  updatePlayIcon(true);
+  floatingPlayer.style.bottom = "0px";
+}
 
   /* Animación del título */
-  function animateBlock(direction, newData){  const block = document.getElementById("fp-anim");
+  function animateBlock(direction, newData){
+  const block = document.getElementById("fp-anim");
 
-  block.classList.remove(    "fp-title-enter-left","fp-title-exit-left",    "fp-title-enter-right","fp-title-exit-right"  );
-  block.classList.add(direction === "backward" ? "fp-title-exit-right" : "fp-title-exit-left");
+  block.classList.remove(
+    "fp-title-enter-left","fp-title-exit-left",
+    "fp-title-enter-right","fp-title-exit-right"
+  );
 
-  setTimeout(() => {fpTitle.textContent = newData.title;    fpSub2.textContent = newData.contiene;    fpSub3.textContent = "Duración: " + newData.duracion;
+  block.classList.add(
+    direction === "backward" ? "fp-title-exit-right" : "fp-title-exit-left"
+  );
 
-    block.classList.remove("fp-title-enter-left","fp-title-exit-left",  "fp-title-enter-right","fp-title-exit-right");
-    block.classList.add(direction === "backward" ? "fp-title-enter-right" : "fp-title-enter-left");}, 200);}
+  setTimeout(() => {
+
+    fpTitle.textContent = newData.title;
+    fpSub2.textContent = newData.contiene;
+    fpSub3.textContent = "Duración: " + newData.duracion;
+
+    block.classList.remove(
+      "fp-title-enter-left","fp-title-exit-left",
+      "fp-title-enter-right","fp-title-exit-right"
+    );
+
+    block.classList.add(
+      direction === "backward" ? "fp-title-enter-right" : "fp-title-enter-left"
+    );
+
+  }, 200);
+}
+
 
 /* BOTÓN REPRODUCIR TODO */
-playAllBtn.addEventListener("click", () => {playIndex(0, "forward");});
+playAllBtn.addEventListener("click", () => {
+  playIndex(0, "forward");
+});
 
 /* CERRAR */
-fpClose.addEventListener("click", () => {  player.pause();  floatingPlayer.style.bottom = `-${floatingPlayer.offsetHeight}px`;});
+fpClose.addEventListener("click", () => {
+  player.pause();
+  floatingPlayer.style.bottom = `-${floatingPlayer.offsetHeight}px`;
+});
 
 /* COLAPSAR */
-fpCollapse.addEventListener("click", (e) => {  e.stopPropagation();  floatingPlayer.classList.remove("expanded");});
+fpCollapse.addEventListener("click", (e) => {
+  e.stopPropagation();
+  floatingPlayer.classList.remove("expanded");
+});
 
 /* OSCURECER COLOR */
-function darkenColor(r,g,b,amount){return `rgba(${Math.floor(r*amount)}, ${Math.floor(g*amount)}, ${Math.floor(b*amount)}, 1)`;}
+function darkenColor(r,g,b,amount){
+  return `rgba(${Math.floor(r*amount)}, ${Math.floor(g*amount)}, ${Math.floor(b*amount)}, 1)`;
+}
 
 /* GRADIENTE DINÁMICO */
 function setDynamicGradient() {
@@ -368,29 +412,63 @@ function setDynamicGradient() {
     `linear-gradient(135deg, ${mid1}, ${mid2})`;
 
   document.body.style.background =
-    `linear-gradient(to bottom, ${fon1}, ${fon2}, ${fon3})`;}
+    `linear-gradient(to bottom, ${fon1}, ${fon2}, ${fon3})`;
+}
+
 
 /* PROGRESO */
-player.addEventListener("timeupdate", () => {  if (!player.duration || isDraggingProgress) return;
-  const percent = (player.currentTime / player.duration) * 100;  fpProgress.style.width = percent + "%";  fpProgressThumb.style.left = percent + "%";});
+player.addEventListener("timeupdate", () => {
+  if (!player.duration || isDraggingProgress) return;
+  const percent = (player.currentTime / player.duration) * 100;
+  fpProgress.style.width = percent + "%";
+  fpProgressThumb.style.left = percent + "%";
+});
 
 function seekFromClientX(clientX){
-  const rect = fpProgressContainer.getBoundingClientRect();  let x = clientX - rect.left;  x = Math.max(0, Math.min(rect.width, x));  const percent = x / rect.width;
+  const rect = fpProgressContainer.getBoundingClientRect();
+  let x = clientX - rect.left;
+  x = Math.max(0, Math.min(rect.width, x));
+  const percent = x / rect.width;
 
-  if (player.duration) {    player.currentTime = percent * player.duration;  }
+  if (player.duration) {
+    player.currentTime = percent * player.duration;
+  }
 
-  const percent100 = percent * 100;  fpProgress.style.width = percent100 + "%";  fpProgressThumb.style.left = percent100 + "%";}
+  const percent100 = percent * 100;
+  fpProgress.style.width = percent100 + "%";
+  fpProgressThumb.style.left = percent100 + "%";
+}
 
-fpProgressContainer.addEventListener("mousedown", (e) => {  e.stopPropagation();  isDraggingProgress = true;  seekFromClientX(e.clientX);});
+fpProgressContainer.addEventListener("mousedown", (e) => {
+  e.stopPropagation();
+  isDraggingProgress = true;
+  seekFromClientX(e.clientX);
+});
 
-document.addEventListener("mousemove", (e) => {  if (!isDraggingProgress) return;  seekFromClientX(e.clientX);});
+document.addEventListener("mousemove", (e) => {
+  if (!isDraggingProgress) return;
+  seekFromClientX(e.clientX);
+});
 
-document.addEventListener("mouseup", () => {  isDraggingProgress = false;});
+document.addEventListener("mouseup", () => {
+  isDraggingProgress = false;
+});
 
 /* Touch */
-fpProgressContainer.addEventListener("touchstart", (e) => {  e.stopPropagation();  isDraggingProgress = true;  seekFromClientX(e.touches[0].clientX);}, {passive:true});
-document.addEventListener("touchmove", (e) => {  if (!isDraggingProgress) return;  seekFromClientX(e.touches[0].clientX);}, {passive:true});
-document.addEventListener("touchend", () => {isDraggingProgress = false;});
+fpProgressContainer.addEventListener("touchstart", (e) => {
+  e.stopPropagation();
+  isDraggingProgress = true;
+  seekFromClientX(e.touches[0].clientX);
+}, {passive:true});
+
+document.addEventListener("touchmove", (e) => {
+  if (!isDraggingProgress) return;
+  seekFromClientX(e.touches[0].clientX);
+}, {passive:true});
+
+document.addEventListener("touchend", () => {
+  isDraggingProgress = false;
+});
 
 /* SIGUIENTE / ANTERIOR */
 document.getElementById("fp-next").addEventListener("click", (e) => {
@@ -398,47 +476,67 @@ document.getElementById("fp-next").addEventListener("click", (e) => {
   if (shuffle) {
     const randomIndex = Math.floor(Math.random() * trackElements.length);
     playIndex(randomIndex, "forward");
-    return;}
+    return;
+  }
   const nextIndex = (currentIndex + 1) % trackElements.length;
-  playIndex(nextIndex, "forward");});
+  playIndex(nextIndex, "forward");
+});
 
 document.getElementById("fp-prev").addEventListener("click", (e) => {
   e.stopPropagation();
   const prevIndex = (currentIndex - 1 + trackElements.length) % trackElements.length;
-  playIndex(prevIndex, "backward");});
+  playIndex(prevIndex, "backward");
+});
 
 /* REPETIR / ALEATORIO */
 fpRepeatBtn.addEventListener("click", (e) => {
   e.stopPropagation();
   repeat = !repeat;
-  fpRepeatBtn.classList.toggle("active", repeat);});
+  fpRepeatBtn.classList.toggle("active", repeat);
+});
 
 fpShuffleBtn.addEventListener("click", (e) => {
   e.stopPropagation();
   shuffle = !shuffle;
-  fpShuffleBtn.classList.toggle("active", shuffle);});
+  fpShuffleBtn.classList.toggle("active", shuffle);
+});
 
 player.addEventListener("ended", () => {
   if (repeat) {
     playIndex(currentIndex, "forward");
-    return;  }
+    return;
+  }
   if (shuffle) {
     const randomIndex = Math.floor(Math.random() * trackElements.length);
     playIndex(randomIndex, "forward");
-    return;  }
+    return;
+  }
   const nextIndex = (currentIndex + 1) % trackElements.length;
-  playIndex(nextIndex, "forward");});
+  playIndex(nextIndex, "forward");
+});
 
 /* PLAY / PAUSA */
 fpPlayBtn.addEventListener("click", (e) => {
   e.stopPropagation();
-  if (player.paused) {player.play(); updatePlayIcon(true);
-  } else {player.pause(); updatePlayIcon(false); }});
+  if (player.paused) {
+    player.play();
+    updatePlayIcon(true);
+  } else {
+    player.pause();
+    updatePlayIcon(false);
+  }
+});
 
 function updatePlayIcon(isPlaying){
-  if (isPlaying) {fpPlayIcon.innerHTML = '<path d="M7 5h3v14H7zM14 5h3v14h-3z"/>';  } else {    fpPlayIcon.innerHTML = '<path d="M8 5v14l11-7z"/>';  }}
+  if (isPlaying) {
+    fpPlayIcon.innerHTML = '<path d="M7 5h3v14H7zM14 5h3v14h-3z"/>';
+  } else {
+    fpPlayIcon.innerHTML = '<path d="M8 5v14l11-7z"/>';
+  }
+}
 
-player.addEventListener("play", () => updatePlayIcon(true));player.addEventListener("pause", () => updatePlayIcon(false));
+player.addEventListener("play", () => updatePlayIcon(true));
+player.addEventListener("pause", () => updatePlayIcon(false));
 
 /* EXPANDIR */
 floatingPlayer.addEventListener("click", (e) => {
@@ -446,5 +544,7 @@ floatingPlayer.addEventListener("click", (e) => {
       e.target.closest("#fp-close") || 
       e.target.closest("#fp-collapse") ||
       e.target.closest("#fp-progress-container")) return;
-  floatingPlayer.classList.toggle("expanded");});
+
+  floatingPlayer.classList.toggle("expanded");
+});
 </script>
